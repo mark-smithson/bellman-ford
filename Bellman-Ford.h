@@ -5,11 +5,16 @@
 #include <vector>
 using namespace std;
 
-using Arc = pair<double,int>; //the double is the weight of the arc for some u-v
+
+/* This pair stores the information of an Arc. First atribute is the weight of the arc
+and second atribute is the end node of the arc. */
+using Arc = pair<double,int>; 
+
 using Graph = vector<vector<Arc>>;
 
 const double infinite = numeric_limits<int>::max();
 
+/* This function writes the shortest path from xi to xf. */
 void print_path (int xi, int xf, const vector<int> &prev) {
     if (xf == xi) cout << xi;
     else {
@@ -18,6 +23,8 @@ void print_path (int xi, int xf, const vector<int> &prev) {
     }
 }
 
+/* Given two nodes it compute the shortest path between them.
+    The graph cannot contain any negative cycle */
 void Bellman_Ford(const Graph& G, int start, int end) {
     int V = G.size();
 
@@ -30,12 +37,12 @@ void Bellman_Ford(const Graph& G, int start, int end) {
 
         for (int j = 0; j < V; ++j) {
             for (Arc a : G[j]) {
-                int v = a.second;
+                int node = a.second;
                 double weight = a.first;
 
-                if (dist[v] > dist[j] + weight) {
-                    dist[v] = dist[j] + weight;
-                    prev[v] = j;
+                if (dist[node] > dist[j] + weight) {
+                    dist[node] = dist[j] + weight;
+                    prev[node] = j;
                 }
             }
         }
