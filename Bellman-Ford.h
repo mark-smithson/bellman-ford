@@ -24,7 +24,8 @@ void print_path (int xi, int xf, const vector<int> &prev) {
 }
 
 /* Given two nodes it compute the shortest path between them.
-    The graph cannot contain any negative cycle */
+    The graph cannot contain any negative cycle.
+    The graph is represented as an adjacency list*/
 void Bellman_Ford(const Graph& G, int start, int end) {
     int V = G.size();
 
