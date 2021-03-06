@@ -38,6 +38,7 @@ void Bellman_Ford(const Graph& G, int start, int end) {
 
         for (int j = 0; j < V; ++j) {
             for (Arc a : G[j]) {
+                
                 int node = a.second;
                 double weight = a.first;
 
