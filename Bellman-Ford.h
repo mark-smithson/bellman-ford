@@ -14,42 +14,49 @@ using Graph = vector<vector<Arc>>;
 
 const double infinite = numeric_limits<int>::max();
 
-/* This function writes the shortest path from xi to xf. */
-void print_path (int xi, int xf, const vector<int> &prev) {
-    if (xf == xi) cout << xi;
+void result (int xi, int xf, const vector<int> &prev, vector<int> &res) {
+    if (xf == xi) res.push_back(xi);
     else {
-        print_path(xi , prev[xf], prev);
-        cout << " " << xf;
+        result(xi,prev[xf],prev,res);
+        res.push_back(xf);
     }
 }
 
 /* Given two nodes it computes the shortest path between them.
-    The graph cannot contain any negative cycle.
-    The graph is represented as an adjacency list*/
-void Bellman_Ford(const Graph& G, int start, int end) {
+    The graph cannot contain any negative cycle */
+vector<int> Bellman_Ford(const Graph& G, int start, int end) {
     int V = G.size();
-
+    
+    vector<int> res;
     vector<int> prev(V);
     vector<int> dist(V, infinite);
 
     dist[start] = 0;
+    bool mod = false;
 
     for (int i = 0; i < V; ++i) {
-
+        
         for (int j = 0; j < V; ++j) {
             for (Arc a : G[j]) {
-                
                 int node = a.second;
                 double weight = a.first;
 
                 if (dist[node] > dist[j] + weight) {
+                    mod = true;
                     dist[node] = dist[j] + weight;
                     prev[node] = j;
                 }
             }
         }
-    }
 
-    print_path(start,end,prev);
-    cout << endl;
+        if (not mod) {
+            result(start,end,prev,res);
+            return res;
+        }
+
+        mod = false;
+    }
+    
+    result(start,end,prev,res);
+    return res;
 }
