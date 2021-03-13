@@ -5,11 +5,12 @@
 #include <vector>
 using namespace std;
 
-
 /* This pair stores the information of an Arc. First atribute is the weight of the arc
 and second atribute is the end node of the arc. */
 using Arc = pair<double,int>; 
 
+
+/* The indexes of the graph go from 0 to n-1. Being n the number of nodes of the graph*/
 using Graph = vector<vector<Arc>>;
 
 const double infinite = numeric_limits<int>::max();
@@ -22,8 +23,9 @@ void result (int xi, int xf, const vector<int> &prev, vector<int> &res) {
     }
 }
 
-/* Given two nodes it computes the shortest path between them.
-    The graph cannot contain any negative cycle */
+/* This function computes the shortest path between two given nodes and returns
+    a vector with the shortest path.
+    The graph cannot contain any negative cycle. */
 vector<int> Bellman_Ford(const Graph& G, int start, int end) {
     int V = G.size();
     
