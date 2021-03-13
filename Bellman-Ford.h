@@ -51,6 +51,8 @@ vector<int> Bellman_Ford(const Graph& G, int start, int end) {
             }
         }
 
+        
+        //If no modification is made we can stop the algorithm.
         if (not mod) {
             result(start,end,prev,res);
             return res;
