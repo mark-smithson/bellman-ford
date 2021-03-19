@@ -3,6 +3,7 @@
 #include <iostream>
 #include <limits>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 /* This pair stores the information of an Arc. First atribute is the weight of the arc
@@ -14,14 +15,6 @@ using Arc = pair<double,int>;
 using Graph = vector<vector<Arc>>;
 
 const double infinite = numeric_limits<int>::max();
-
-void result (int xi, int xf, const vector<int> &prev, vector<int> &res) {
-    if (xf == xi) res.push_back(xi);
-    else {
-        result(xi,prev[xf],prev,res);
-        res.push_back(xf);
-    }
-}
 
 /* This function computes the shortest path between two given nodes and returns
     a vector with the shortest path.
@@ -51,16 +44,19 @@ vector<int> Bellman_Ford(const Graph& G, int start, int end) {
             }
         }
 
-        
         //If no modification is made we can stop the algorithm.
-        if (not mod) {
-            result(start,end,prev,res);
-            return res;
-        }
-
+        if (not mod) break;
         mod = false;
     }
-    
-    result(start,end,prev,res);
+
+    res.push_back(end);
+    int aux = end;
+
+    while (aux != start) {
+        res.push_back(prev[aux]);
+        aux = prev[aux];
+    }
+
+    reverse(res.begin(),res.end());
     return res;
 }
