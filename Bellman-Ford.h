@@ -19,7 +19,7 @@ const double infinite = numeric_limits<int>::max();
 /* This function computes the shortest path between two given nodes and returns
     a vector with the shortest path.
     If no path is found it returns an empty vector.
-    The graph cannot contain any negative cycle. */
+    If the graph containt a negative cycle neg_cycle = true and the algorithm stops. */
 vector<int> Bellman_Ford(const Graph& G, int start, int end, bool& neg_cycle) {
     int V = G.size();
     
@@ -30,6 +30,7 @@ vector<int> Bellman_Ford(const Graph& G, int start, int end, bool& neg_cycle) {
     dist[start] = 0;
     bool mod = false;
     bool path = false;
+    neg_cycle = false;
 
     for (int i = 0; i < V; ++i) {
         
@@ -50,6 +51,16 @@ vector<int> Bellman_Ford(const Graph& G, int start, int end, bool& neg_cycle) {
         //If no modification is made we can stop the algorithm.
         if (not mod) break;
         mod = false;
+    }
+
+    //Negative cycle step
+    for (int j = 0; j < V; ++j) {
+        for (Arc a : G[j]) {
+            int node = a.second;
+            double weight = a.first;
+
+            if (dist[node] > dist[j] + weight) {neg_cycle = true; break;}
+        }
     }
     
     if (path) {
