@@ -19,7 +19,7 @@ const double infinite = numeric_limits<int>::max();
 /* This function computes the shortest path between two given nodes and returns
     a vector with the shortest path.
     If no path is found it returns an empty vector.
-    If the graph containt a negative cycle neg_cycle = true and the algorithm stops. */
+    If the graph contains a negative cycle neg_cycle = true and the algorithm stops. */
 vector<int> Bellman_Ford(const Graph& G, int start, int end, bool& neg_cycle) {
     int V = G.size();
     
