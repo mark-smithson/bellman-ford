@@ -8,6 +8,8 @@ from openai import OpenAI
 import requests
 from datetime import datetime
 from io import BytesIO
+from rembg import remove
+from PIL import Image
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
@@ -38,13 +40,23 @@ def generate_logo(prompt: str):
         img_data = requests.get(image_url).content
 
         # Save original
-        filename = f"logo_{timestamp}.png"
-        with open(filename, 'wb') as f:
+        original_filename = f"logo_original_{timestamp}.png"
+        with open(original_filename, 'wb') as f:
             f.write(img_data)
-        print(f"✅ Logo saved: {filename}")
+        print(f"✅ Original saved: {original_filename}")
+
+        # Remove background to make transparent
+        print(f"🔄 Removing background...")
+        input_image = Image.open(BytesIO(img_data))
+        output_image = remove(input_image)
+
+        # Save transparent version
+        transparent_filename = f"logo_transparent_{timestamp}.png"
+        output_image.save(transparent_filename)
+        print(f"✅ Transparent logo saved: {transparent_filename}")
         print(f"🔗 Direct URL: {image_url}")
 
-        return filename
+        return transparent_filename
 
     except Exception as e:
         print(f"❌ Error: {e}")
