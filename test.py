@@ -64,7 +64,7 @@ def generate_logo(prompt: str):
 
 
 if __name__ == "__main__":
-    # Ultra-minimalist tech logo for AI trading platform
-    prompt = "Minimalist geometric logo: single continuous line forming both an upward arrow and a neural network node, monochromatic deep blue (#0A2463), negative space design, perfectly symmetrical, ultra-clean vector art, flat design, no gradients, tech startup logo"
+    # Sleek abstract minimalist tech logo
+    prompt = "Abstract minimalist logo: three ascending geometric bars transforming into flowing data streams, monochromatic midnight blue, clean angular shapes, negative space, perfect symmetry, ultra-sleek vector design, flat style, modern fintech aesthetic, no gradients, corporate tech branding"
 
     generate_logo(prompt)
